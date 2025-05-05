@@ -74,6 +74,15 @@ func TypeOf(input any) (TypeSpecifier, error) {
 	return TypeSpecifier{FHIR, primitiveToLowercase(name)}, nil
 }
 
+// ToString returns a string representation of the type specifier in the format:
+// <namespace>.<type>
+func (ts TypeSpecifier) ToString() string {
+	if ts.namespace != "" {
+		return ts.namespace + "." + ts.typeName
+	}
+	return ts.typeName
+}
+
 // Is returns a boolean representing whether or not the receiver type is equivalent to the
 // input type, or if it's a valid subtype.
 func (ts TypeSpecifier) Is(input TypeSpecifier) system.Boolean {

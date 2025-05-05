@@ -36,15 +36,15 @@ func fhirpathParserInit() {
 		"'&'", "'is'", "'as'", "'|'", "'<='", "'<'", "'>'", "'>='", "'='", "'~'",
 		"'!='", "'!~'", "'in'", "'contains'", "'and'", "'or'", "'xor'", "'implies'",
 		"'('", "')'", "'{'", "'}'", "'true'", "'false'", "'%'", "'$this'", "'$index'",
-		"'$total'", "','", "'year'", "'month'", "'week'", "'day'", "'hour'",
-		"'minute'", "'second'", "'millisecond'", "'years'", "'months'", "'weeks'",
-		"'days'", "'hours'", "'minutes'", "'seconds'", "'milliseconds'",
+		"'$total'", "'ofType('", "','", "'year'", "'month'", "'week'", "'day'",
+		"'hour'", "'minute'", "'second'", "'millisecond'", "'years'", "'months'",
+		"'weeks'", "'days'", "'hours'", "'minutes'", "'seconds'", "'milliseconds'",
 	}
 	staticData.SymbolicNames = []string{
 		"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
 		"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
 		"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-		"", "", "", "", "DATE", "DATETIME", "TIME", "IDENTIFIER", "DELIMITEDIDENTIFIER",
+		"", "", "", "", "", "DATE", "DATETIME", "TIME", "IDENTIFIER", "DELIMITEDIDENTIFIER",
 		"STRING", "NUMBER", "WS", "COMMENT", "LINE_COMMENT",
 	}
 	staticData.RuleNames = []string{
@@ -54,7 +54,7 @@ func fhirpathParserInit() {
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 64, 155, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 65, 161, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 1, 0, 1, 0,
 		1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 38, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -64,66 +64,69 @@ func fhirpathParserInit() {
 		10, 1, 12, 1, 81, 9, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2,
 		90, 8, 2, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 3, 3, 101,
 		8, 3, 1, 4, 1, 4, 1, 4, 3, 4, 106, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5,
-		3, 5, 113, 8, 5, 1, 6, 1, 6, 1, 6, 3, 6, 118, 8, 6, 1, 6, 1, 6, 1, 7, 1,
-		7, 1, 7, 5, 7, 125, 8, 7, 10, 7, 12, 7, 128, 9, 7, 1, 8, 1, 8, 3, 8, 132,
-		8, 8, 1, 9, 1, 9, 1, 9, 3, 9, 137, 8, 9, 1, 10, 1, 10, 1, 11, 1, 11, 1,
-		12, 1, 12, 1, 13, 1, 13, 1, 13, 5, 13, 148, 8, 13, 10, 13, 12, 13, 151,
-		9, 13, 1, 14, 1, 14, 1, 14, 0, 1, 2, 15, 0, 2, 4, 6, 8, 10, 12, 14, 16,
-		18, 20, 22, 24, 26, 28, 0, 12, 1, 0, 4, 5, 1, 0, 6, 9, 2, 0, 4, 5, 10,
-		10, 1, 0, 14, 17, 1, 0, 18, 21, 1, 0, 22, 23, 1, 0, 25, 26, 1, 0, 11, 12,
-		1, 0, 32, 33, 1, 0, 39, 46, 1, 0, 47, 54, 3, 0, 11, 12, 22, 23, 58, 59,
-		173, 0, 30, 1, 0, 0, 0, 2, 37, 1, 0, 0, 0, 4, 89, 1, 0, 0, 0, 6, 100, 1,
-		0, 0, 0, 8, 102, 1, 0, 0, 0, 10, 112, 1, 0, 0, 0, 12, 114, 1, 0, 0, 0,
-		14, 121, 1, 0, 0, 0, 16, 129, 1, 0, 0, 0, 18, 136, 1, 0, 0, 0, 20, 138,
-		1, 0, 0, 0, 22, 140, 1, 0, 0, 0, 24, 142, 1, 0, 0, 0, 26, 144, 1, 0, 0,
-		0, 28, 152, 1, 0, 0, 0, 30, 31, 3, 2, 1, 0, 31, 32, 5, 0, 0, 1, 32, 1,
-		1, 0, 0, 0, 33, 34, 6, 1, -1, 0, 34, 38, 3, 4, 2, 0, 35, 36, 7, 0, 0, 0,
-		36, 38, 3, 2, 1, 11, 37, 33, 1, 0, 0, 0, 37, 35, 1, 0, 0, 0, 38, 79, 1,
-		0, 0, 0, 39, 40, 10, 10, 0, 0, 40, 41, 7, 1, 0, 0, 41, 78, 3, 2, 1, 11,
-		42, 43, 10, 9, 0, 0, 43, 44, 7, 2, 0, 0, 44, 78, 3, 2, 1, 10, 45, 46, 10,
-		7, 0, 0, 46, 47, 5, 13, 0, 0, 47, 78, 3, 2, 1, 8, 48, 49, 10, 6, 0, 0,
-		49, 50, 7, 3, 0, 0, 50, 78, 3, 2, 1, 7, 51, 52, 10, 5, 0, 0, 52, 53, 7,
-		4, 0, 0, 53, 78, 3, 2, 1, 6, 54, 55, 10, 4, 0, 0, 55, 56, 7, 5, 0, 0, 56,
-		78, 3, 2, 1, 5, 57, 58, 10, 3, 0, 0, 58, 59, 5, 24, 0, 0, 59, 78, 3, 2,
-		1, 4, 60, 61, 10, 2, 0, 0, 61, 62, 7, 6, 0, 0, 62, 78, 3, 2, 1, 3, 63,
-		64, 10, 1, 0, 0, 64, 65, 5, 27, 0, 0, 65, 78, 3, 2, 1, 2, 66, 67, 10, 13,
-		0, 0, 67, 68, 5, 1, 0, 0, 68, 78, 3, 10, 5, 0, 69, 70, 10, 12, 0, 0, 70,
-		71, 5, 2, 0, 0, 71, 72, 3, 2, 1, 0, 72, 73, 5, 3, 0, 0, 73, 78, 1, 0, 0,
-		0, 74, 75, 10, 8, 0, 0, 75, 76, 7, 7, 0, 0, 76, 78, 3, 24, 12, 0, 77, 39,
-		1, 0, 0, 0, 77, 42, 1, 0, 0, 0, 77, 45, 1, 0, 0, 0, 77, 48, 1, 0, 0, 0,
-		77, 51, 1, 0, 0, 0, 77, 54, 1, 0, 0, 0, 77, 57, 1, 0, 0, 0, 77, 60, 1,
-		0, 0, 0, 77, 63, 1, 0, 0, 0, 77, 66, 1, 0, 0, 0, 77, 69, 1, 0, 0, 0, 77,
-		74, 1, 0, 0, 0, 78, 81, 1, 0, 0, 0, 79, 77, 1, 0, 0, 0, 79, 80, 1, 0, 0,
-		0, 80, 3, 1, 0, 0, 0, 81, 79, 1, 0, 0, 0, 82, 90, 3, 10, 5, 0, 83, 90,
-		3, 6, 3, 0, 84, 90, 3, 8, 4, 0, 85, 86, 5, 28, 0, 0, 86, 87, 3, 2, 1, 0,
-		87, 88, 5, 29, 0, 0, 88, 90, 1, 0, 0, 0, 89, 82, 1, 0, 0, 0, 89, 83, 1,
-		0, 0, 0, 89, 84, 1, 0, 0, 0, 89, 85, 1, 0, 0, 0, 90, 5, 1, 0, 0, 0, 91,
-		92, 5, 30, 0, 0, 92, 101, 5, 31, 0, 0, 93, 101, 7, 8, 0, 0, 94, 101, 5,
-		60, 0, 0, 95, 101, 5, 61, 0, 0, 96, 101, 5, 55, 0, 0, 97, 101, 5, 56, 0,
-		0, 98, 101, 5, 57, 0, 0, 99, 101, 3, 16, 8, 0, 100, 91, 1, 0, 0, 0, 100,
-		93, 1, 0, 0, 0, 100, 94, 1, 0, 0, 0, 100, 95, 1, 0, 0, 0, 100, 96, 1, 0,
-		0, 0, 100, 97, 1, 0, 0, 0, 100, 98, 1, 0, 0, 0, 100, 99, 1, 0, 0, 0, 101,
-		7, 1, 0, 0, 0, 102, 105, 5, 34, 0, 0, 103, 106, 3, 28, 14, 0, 104, 106,
-		5, 60, 0, 0, 105, 103, 1, 0, 0, 0, 105, 104, 1, 0, 0, 0, 106, 9, 1, 0,
-		0, 0, 107, 113, 3, 28, 14, 0, 108, 113, 3, 12, 6, 0, 109, 113, 5, 35, 0,
-		0, 110, 113, 5, 36, 0, 0, 111, 113, 5, 37, 0, 0, 112, 107, 1, 0, 0, 0,
-		112, 108, 1, 0, 0, 0, 112, 109, 1, 0, 0, 0, 112, 110, 1, 0, 0, 0, 112,
-		111, 1, 0, 0, 0, 113, 11, 1, 0, 0, 0, 114, 115, 3, 28, 14, 0, 115, 117,
-		5, 28, 0, 0, 116, 118, 3, 14, 7, 0, 117, 116, 1, 0, 0, 0, 117, 118, 1,
-		0, 0, 0, 118, 119, 1, 0, 0, 0, 119, 120, 5, 29, 0, 0, 120, 13, 1, 0, 0,
-		0, 121, 126, 3, 2, 1, 0, 122, 123, 5, 38, 0, 0, 123, 125, 3, 2, 1, 0, 124,
-		122, 1, 0, 0, 0, 125, 128, 1, 0, 0, 0, 126, 124, 1, 0, 0, 0, 126, 127,
-		1, 0, 0, 0, 127, 15, 1, 0, 0, 0, 128, 126, 1, 0, 0, 0, 129, 131, 5, 61,
-		0, 0, 130, 132, 3, 18, 9, 0, 131, 130, 1, 0, 0, 0, 131, 132, 1, 0, 0, 0,
-		132, 17, 1, 0, 0, 0, 133, 137, 3, 20, 10, 0, 134, 137, 3, 22, 11, 0, 135,
-		137, 5, 60, 0, 0, 136, 133, 1, 0, 0, 0, 136, 134, 1, 0, 0, 0, 136, 135,
-		1, 0, 0, 0, 137, 19, 1, 0, 0, 0, 138, 139, 7, 9, 0, 0, 139, 21, 1, 0, 0,
-		0, 140, 141, 7, 10, 0, 0, 141, 23, 1, 0, 0, 0, 142, 143, 3, 26, 13, 0,
-		143, 25, 1, 0, 0, 0, 144, 149, 3, 28, 14, 0, 145, 146, 5, 1, 0, 0, 146,
-		148, 3, 28, 14, 0, 147, 145, 1, 0, 0, 0, 148, 151, 1, 0, 0, 0, 149, 147,
-		1, 0, 0, 0, 149, 150, 1, 0, 0, 0, 150, 27, 1, 0, 0, 0, 151, 149, 1, 0,
-		0, 0, 152, 153, 7, 11, 0, 0, 153, 29, 1, 0, 0, 0, 12, 37, 77, 79, 89, 100,
-		105, 112, 117, 126, 131, 136, 149,
+		3, 5, 113, 8, 5, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 3, 6, 122, 8,
+		6, 1, 6, 1, 6, 3, 6, 126, 8, 6, 1, 7, 1, 7, 1, 7, 5, 7, 131, 8, 7, 10,
+		7, 12, 7, 134, 9, 7, 1, 8, 1, 8, 3, 8, 138, 8, 8, 1, 9, 1, 9, 1, 9, 3,
+		9, 143, 8, 9, 1, 10, 1, 10, 1, 11, 1, 11, 1, 12, 1, 12, 1, 13, 1, 13, 1,
+		13, 5, 13, 154, 8, 13, 10, 13, 12, 13, 157, 9, 13, 1, 14, 1, 14, 1, 14,
+		0, 1, 2, 15, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 0,
+		12, 1, 0, 4, 5, 1, 0, 6, 9, 2, 0, 4, 5, 10, 10, 1, 0, 14, 17, 1, 0, 18,
+		21, 1, 0, 22, 23, 1, 0, 25, 26, 1, 0, 11, 12, 1, 0, 32, 33, 1, 0, 40, 47,
+		1, 0, 48, 55, 3, 0, 11, 12, 22, 23, 59, 60, 180, 0, 30, 1, 0, 0, 0, 2,
+		37, 1, 0, 0, 0, 4, 89, 1, 0, 0, 0, 6, 100, 1, 0, 0, 0, 8, 102, 1, 0, 0,
+		0, 10, 112, 1, 0, 0, 0, 12, 125, 1, 0, 0, 0, 14, 127, 1, 0, 0, 0, 16, 135,
+		1, 0, 0, 0, 18, 142, 1, 0, 0, 0, 20, 144, 1, 0, 0, 0, 22, 146, 1, 0, 0,
+		0, 24, 148, 1, 0, 0, 0, 26, 150, 1, 0, 0, 0, 28, 158, 1, 0, 0, 0, 30, 31,
+		3, 2, 1, 0, 31, 32, 5, 0, 0, 1, 32, 1, 1, 0, 0, 0, 33, 34, 6, 1, -1, 0,
+		34, 38, 3, 4, 2, 0, 35, 36, 7, 0, 0, 0, 36, 38, 3, 2, 1, 11, 37, 33, 1,
+		0, 0, 0, 37, 35, 1, 0, 0, 0, 38, 79, 1, 0, 0, 0, 39, 40, 10, 10, 0, 0,
+		40, 41, 7, 1, 0, 0, 41, 78, 3, 2, 1, 11, 42, 43, 10, 9, 0, 0, 43, 44, 7,
+		2, 0, 0, 44, 78, 3, 2, 1, 10, 45, 46, 10, 7, 0, 0, 46, 47, 5, 13, 0, 0,
+		47, 78, 3, 2, 1, 8, 48, 49, 10, 6, 0, 0, 49, 50, 7, 3, 0, 0, 50, 78, 3,
+		2, 1, 7, 51, 52, 10, 5, 0, 0, 52, 53, 7, 4, 0, 0, 53, 78, 3, 2, 1, 6, 54,
+		55, 10, 4, 0, 0, 55, 56, 7, 5, 0, 0, 56, 78, 3, 2, 1, 5, 57, 58, 10, 3,
+		0, 0, 58, 59, 5, 24, 0, 0, 59, 78, 3, 2, 1, 4, 60, 61, 10, 2, 0, 0, 61,
+		62, 7, 6, 0, 0, 62, 78, 3, 2, 1, 3, 63, 64, 10, 1, 0, 0, 64, 65, 5, 27,
+		0, 0, 65, 78, 3, 2, 1, 2, 66, 67, 10, 13, 0, 0, 67, 68, 5, 1, 0, 0, 68,
+		78, 3, 10, 5, 0, 69, 70, 10, 12, 0, 0, 70, 71, 5, 2, 0, 0, 71, 72, 3, 2,
+		1, 0, 72, 73, 5, 3, 0, 0, 73, 78, 1, 0, 0, 0, 74, 75, 10, 8, 0, 0, 75,
+		76, 7, 7, 0, 0, 76, 78, 3, 24, 12, 0, 77, 39, 1, 0, 0, 0, 77, 42, 1, 0,
+		0, 0, 77, 45, 1, 0, 0, 0, 77, 48, 1, 0, 0, 0, 77, 51, 1, 0, 0, 0, 77, 54,
+		1, 0, 0, 0, 77, 57, 1, 0, 0, 0, 77, 60, 1, 0, 0, 0, 77, 63, 1, 0, 0, 0,
+		77, 66, 1, 0, 0, 0, 77, 69, 1, 0, 0, 0, 77, 74, 1, 0, 0, 0, 78, 81, 1,
+		0, 0, 0, 79, 77, 1, 0, 0, 0, 79, 80, 1, 0, 0, 0, 80, 3, 1, 0, 0, 0, 81,
+		79, 1, 0, 0, 0, 82, 90, 3, 10, 5, 0, 83, 90, 3, 6, 3, 0, 84, 90, 3, 8,
+		4, 0, 85, 86, 5, 28, 0, 0, 86, 87, 3, 2, 1, 0, 87, 88, 5, 29, 0, 0, 88,
+		90, 1, 0, 0, 0, 89, 82, 1, 0, 0, 0, 89, 83, 1, 0, 0, 0, 89, 84, 1, 0, 0,
+		0, 89, 85, 1, 0, 0, 0, 90, 5, 1, 0, 0, 0, 91, 92, 5, 30, 0, 0, 92, 101,
+		5, 31, 0, 0, 93, 101, 7, 8, 0, 0, 94, 101, 5, 61, 0, 0, 95, 101, 5, 62,
+		0, 0, 96, 101, 5, 56, 0, 0, 97, 101, 5, 57, 0, 0, 98, 101, 5, 58, 0, 0,
+		99, 101, 3, 16, 8, 0, 100, 91, 1, 0, 0, 0, 100, 93, 1, 0, 0, 0, 100, 94,
+		1, 0, 0, 0, 100, 95, 1, 0, 0, 0, 100, 96, 1, 0, 0, 0, 100, 97, 1, 0, 0,
+		0, 100, 98, 1, 0, 0, 0, 100, 99, 1, 0, 0, 0, 101, 7, 1, 0, 0, 0, 102, 105,
+		5, 34, 0, 0, 103, 106, 3, 28, 14, 0, 104, 106, 5, 61, 0, 0, 105, 103, 1,
+		0, 0, 0, 105, 104, 1, 0, 0, 0, 106, 9, 1, 0, 0, 0, 107, 113, 3, 28, 14,
+		0, 108, 113, 3, 12, 6, 0, 109, 113, 5, 35, 0, 0, 110, 113, 5, 36, 0, 0,
+		111, 113, 5, 37, 0, 0, 112, 107, 1, 0, 0, 0, 112, 108, 1, 0, 0, 0, 112,
+		109, 1, 0, 0, 0, 112, 110, 1, 0, 0, 0, 112, 111, 1, 0, 0, 0, 113, 11, 1,
+		0, 0, 0, 114, 115, 5, 38, 0, 0, 115, 116, 3, 24, 12, 0, 116, 117, 5, 29,
+		0, 0, 117, 126, 1, 0, 0, 0, 118, 119, 3, 28, 14, 0, 119, 121, 5, 28, 0,
+		0, 120, 122, 3, 14, 7, 0, 121, 120, 1, 0, 0, 0, 121, 122, 1, 0, 0, 0, 122,
+		123, 1, 0, 0, 0, 123, 124, 5, 29, 0, 0, 124, 126, 1, 0, 0, 0, 125, 114,
+		1, 0, 0, 0, 125, 118, 1, 0, 0, 0, 126, 13, 1, 0, 0, 0, 127, 132, 3, 2,
+		1, 0, 128, 129, 5, 39, 0, 0, 129, 131, 3, 2, 1, 0, 130, 128, 1, 0, 0, 0,
+		131, 134, 1, 0, 0, 0, 132, 130, 1, 0, 0, 0, 132, 133, 1, 0, 0, 0, 133,
+		15, 1, 0, 0, 0, 134, 132, 1, 0, 0, 0, 135, 137, 5, 62, 0, 0, 136, 138,
+		3, 18, 9, 0, 137, 136, 1, 0, 0, 0, 137, 138, 1, 0, 0, 0, 138, 17, 1, 0,
+		0, 0, 139, 143, 3, 20, 10, 0, 140, 143, 3, 22, 11, 0, 141, 143, 5, 61,
+		0, 0, 142, 139, 1, 0, 0, 0, 142, 140, 1, 0, 0, 0, 142, 141, 1, 0, 0, 0,
+		143, 19, 1, 0, 0, 0, 144, 145, 7, 9, 0, 0, 145, 21, 1, 0, 0, 0, 146, 147,
+		7, 10, 0, 0, 147, 23, 1, 0, 0, 0, 148, 149, 3, 26, 13, 0, 149, 25, 1, 0,
+		0, 0, 150, 155, 3, 28, 14, 0, 151, 152, 5, 1, 0, 0, 152, 154, 3, 28, 14,
+		0, 153, 151, 1, 0, 0, 0, 154, 157, 1, 0, 0, 0, 155, 153, 1, 0, 0, 0, 155,
+		156, 1, 0, 0, 0, 156, 27, 1, 0, 0, 0, 157, 155, 1, 0, 0, 0, 158, 159, 7,
+		11, 0, 0, 159, 29, 1, 0, 0, 0, 13, 37, 77, 79, 89, 100, 105, 112, 121,
+		125, 132, 137, 142, 155,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -216,16 +219,17 @@ const (
 	fhirpathParserT__51               = 52
 	fhirpathParserT__52               = 53
 	fhirpathParserT__53               = 54
-	fhirpathParserDATE                = 55
-	fhirpathParserDATETIME            = 56
-	fhirpathParserTIME                = 57
-	fhirpathParserIDENTIFIER          = 58
-	fhirpathParserDELIMITEDIDENTIFIER = 59
-	fhirpathParserSTRING              = 60
-	fhirpathParserNUMBER              = 61
-	fhirpathParserWS                  = 62
-	fhirpathParserCOMMENT             = 63
-	fhirpathParserLINE_COMMENT        = 64
+	fhirpathParserT__54               = 55
+	fhirpathParserDATE                = 56
+	fhirpathParserDATETIME            = 57
+	fhirpathParserTIME                = 58
+	fhirpathParserIDENTIFIER          = 59
+	fhirpathParserDELIMITEDIDENTIFIER = 60
+	fhirpathParserSTRING              = 61
+	fhirpathParserNUMBER              = 62
+	fhirpathParserWS                  = 63
+	fhirpathParserCOMMENT             = 64
+	fhirpathParserLINE_COMMENT        = 65
 )
 
 // fhirpathParser rules.
@@ -1339,7 +1343,7 @@ func (p *fhirpathParser) expression(_p int) (localctx IExpressionContext) {
 	}
 
 	switch p.GetTokenStream().LA(1) {
-	case fhirpathParserT__10, fhirpathParserT__11, fhirpathParserT__21, fhirpathParserT__22, fhirpathParserT__27, fhirpathParserT__29, fhirpathParserT__31, fhirpathParserT__32, fhirpathParserT__33, fhirpathParserT__34, fhirpathParserT__35, fhirpathParserT__36, fhirpathParserDATE, fhirpathParserDATETIME, fhirpathParserTIME, fhirpathParserIDENTIFIER, fhirpathParserDELIMITEDIDENTIFIER, fhirpathParserSTRING, fhirpathParserNUMBER:
+	case fhirpathParserT__10, fhirpathParserT__11, fhirpathParserT__21, fhirpathParserT__22, fhirpathParserT__27, fhirpathParserT__29, fhirpathParserT__31, fhirpathParserT__32, fhirpathParserT__33, fhirpathParserT__34, fhirpathParserT__35, fhirpathParserT__36, fhirpathParserT__37, fhirpathParserDATE, fhirpathParserDATETIME, fhirpathParserTIME, fhirpathParserIDENTIFIER, fhirpathParserDELIMITEDIDENTIFIER, fhirpathParserSTRING, fhirpathParserNUMBER:
 		localctx = NewTermExpressionContext(p, localctx)
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
@@ -1958,7 +1962,7 @@ func (p *fhirpathParser) Term() (localctx ITermContext) {
 	}
 
 	switch p.GetTokenStream().LA(1) {
-	case fhirpathParserT__10, fhirpathParserT__11, fhirpathParserT__21, fhirpathParserT__22, fhirpathParserT__34, fhirpathParserT__35, fhirpathParserT__36, fhirpathParserIDENTIFIER, fhirpathParserDELIMITEDIDENTIFIER:
+	case fhirpathParserT__10, fhirpathParserT__11, fhirpathParserT__21, fhirpathParserT__22, fhirpathParserT__34, fhirpathParserT__35, fhirpathParserT__36, fhirpathParserT__37, fhirpathParserIDENTIFIER, fhirpathParserDELIMITEDIDENTIFIER:
 		localctx = NewInvocationTermContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -2921,6 +2925,7 @@ type IFunctionContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
+	TypeSpecifier() ITypeSpecifierContext
 	Identifier() IIdentifierContext
 	ParamList() IParamListContext
 
@@ -2959,6 +2964,22 @@ func NewFunctionContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 }
 
 func (s *FunctionContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FunctionContext) TypeSpecifier() ITypeSpecifierContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ITypeSpecifierContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ITypeSpecifierContext)
+}
 
 func (s *FunctionContext) Identifier() IIdentifierContext {
 	var t antlr.RuleContext
@@ -3015,40 +3036,76 @@ func (p *fhirpathParser) Function() (localctx IFunctionContext) {
 	p.EnterRule(localctx, 12, fhirpathParserRULE_function)
 	var _la int
 
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(114)
-		p.Identifier()
-	}
-	{
-		p.SetState(115)
-		p.Match(fhirpathParserT__27)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
-	}
-	p.SetState(117)
+	p.SetState(125)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_la = p.GetTokenStream().LA(1)
 
-	if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&4575657493346129968) != 0 {
+	switch p.GetTokenStream().LA(1) {
+	case fhirpathParserT__37:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(114)
+			p.Match(fhirpathParserT__37)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(115)
+			p.TypeSpecifier()
+		}
 		{
 			p.SetState(116)
-			p.ParamList()
+			p.Match(fhirpathParserT__28)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
-	}
-	{
-		p.SetState(119)
-		p.Match(fhirpathParserT__28)
+	case fhirpathParserT__10, fhirpathParserT__11, fhirpathParserT__21, fhirpathParserT__22, fhirpathParserIDENTIFIER, fhirpathParserDELIMITEDIDENTIFIER:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(118)
+			p.Identifier()
+		}
+		{
+			p.SetState(119)
+			p.Match(fhirpathParserT__27)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		p.SetState(121)
+		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
-			// Recognition error - abort rule
 			goto errorExit
 		}
+		_la = p.GetTokenStream().LA(1)
+
+		if (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&9151314989632460848) != 0 {
+			{
+				p.SetState(120)
+				p.ParamList()
+			}
+
+		}
+		{
+			p.SetState(123)
+			p.Match(fhirpathParserT__28)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	default:
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
 errorExit:
@@ -3177,31 +3234,31 @@ func (p *fhirpathParser) ParamList() (localctx IParamListContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(121)
+		p.SetState(127)
 		p.expression(0)
 	}
-	p.SetState(126)
+	p.SetState(132)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for _la == fhirpathParserT__37 {
+	for _la == fhirpathParserT__38 {
 		{
-			p.SetState(122)
-			p.Match(fhirpathParserT__37)
+			p.SetState(128)
+			p.Match(fhirpathParserT__38)
 			if p.HasError() {
 				// Recognition error - abort rule
 				goto errorExit
 			}
 		}
 		{
-			p.SetState(123)
+			p.SetState(129)
 			p.expression(0)
 		}
 
-		p.SetState(128)
+		p.SetState(134)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -3312,19 +3369,19 @@ func (p *fhirpathParser) Quantity() (localctx IQuantityContext) {
 	p.EnterRule(localctx, 16, fhirpathParserRULE_quantity)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(129)
+		p.SetState(135)
 		p.Match(fhirpathParserNUMBER)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(131)
+	p.SetState(137)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 9, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 10, p.GetParserRuleContext()) == 1 {
 		{
-			p.SetState(130)
+			p.SetState(136)
 			p.Unit()
 		}
 
@@ -3450,31 +3507,31 @@ func (s *UnitContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 func (p *fhirpathParser) Unit() (localctx IUnitContext) {
 	localctx = NewUnitContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 18, fhirpathParserRULE_unit)
-	p.SetState(136)
+	p.SetState(142)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 
 	switch p.GetTokenStream().LA(1) {
-	case fhirpathParserT__38, fhirpathParserT__39, fhirpathParserT__40, fhirpathParserT__41, fhirpathParserT__42, fhirpathParserT__43, fhirpathParserT__44, fhirpathParserT__45:
+	case fhirpathParserT__39, fhirpathParserT__40, fhirpathParserT__41, fhirpathParserT__42, fhirpathParserT__43, fhirpathParserT__44, fhirpathParserT__45, fhirpathParserT__46:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(133)
+			p.SetState(139)
 			p.DateTimePrecision()
 		}
 
-	case fhirpathParserT__46, fhirpathParserT__47, fhirpathParserT__48, fhirpathParserT__49, fhirpathParserT__50, fhirpathParserT__51, fhirpathParserT__52, fhirpathParserT__53:
+	case fhirpathParserT__47, fhirpathParserT__48, fhirpathParserT__49, fhirpathParserT__50, fhirpathParserT__51, fhirpathParserT__52, fhirpathParserT__53, fhirpathParserT__54:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(134)
+			p.SetState(140)
 			p.PluralDateTimePrecision()
 		}
 
 	case fhirpathParserSTRING:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(135)
+			p.SetState(141)
 			p.Match(fhirpathParserSTRING)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3566,10 +3623,10 @@ func (p *fhirpathParser) DateTimePrecision() (localctx IDateTimePrecisionContext
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(138)
+		p.SetState(144)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&140187732541440) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&280375465082880) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -3656,10 +3713,10 @@ func (p *fhirpathParser) PluralDateTimePrecision() (localctx IPluralDateTimePrec
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(140)
+		p.SetState(146)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&35888059530608640) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&71776119061217280) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -3765,7 +3822,7 @@ func (p *fhirpathParser) TypeSpecifier() (localctx ITypeSpecifierContext) {
 	p.EnterRule(localctx, 24, fhirpathParserRULE_typeSpecifier)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(142)
+		p.SetState(148)
 		p.QualifiedIdentifier()
 	}
 
@@ -3895,22 +3952,22 @@ func (p *fhirpathParser) QualifiedIdentifier() (localctx IQualifiedIdentifierCon
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(144)
+		p.SetState(150)
 		p.Identifier()
 	}
-	p.SetState(149)
+	p.SetState(155)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 11, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 12, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			{
-				p.SetState(145)
+				p.SetState(151)
 				p.Match(fhirpathParserT__0)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -3918,17 +3975,17 @@ func (p *fhirpathParser) QualifiedIdentifier() (localctx IQualifiedIdentifierCon
 				}
 			}
 			{
-				p.SetState(146)
+				p.SetState(152)
 				p.Identifier()
 			}
 
 		}
-		p.SetState(151)
+		p.SetState(157)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 11, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 12, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
@@ -4027,10 +4084,10 @@ func (p *fhirpathParser) Identifier() (localctx IIdentifierContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(152)
+		p.SetState(158)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&864691128467724288) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1729382256922859520) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)

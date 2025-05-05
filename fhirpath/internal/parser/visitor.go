@@ -450,10 +450,28 @@ func (v *FHIRPathVisitor) VisitTotalInvocation(ctx *grammar.TotalInvocationConte
 }
 
 func (v *FHIRPathVisitor) VisitFunction(ctx *grammar.FunctionContext) interface{} {
-	ident := ctx.Identifier().GetText()
-	fn, ok := v.Functions[ident]
-	if !ok {
-		return &VisitResult{nil, fmt.Errorf("%w: %s", errUnresolvedFunction, ident)}
+	var fn funcs.Function
+	if ctx.Identifier() == nil {
+		fn = v.Functions["ofType"]
+	} else {
+		var ok bool
+		fn, ok = v.Functions[ctx.Identifier().GetText()]
+		if !ok {
+			return &VisitResult{nil, fmt.Errorf("%w: %s", errUnresolvedFunction, ctx.Identifier().GetText())}
+		}
+	}
+
+	if typ := ctx.TypeSpecifier(); typ != nil {
+		typeSpecifier := v.Visit(typ).(*typeResult)
+		if typeSpecifier.err != nil {
+			return &VisitResult{nil, typeSpecifier.err}
+		}
+		return v.transformedVisitResult(
+			&expr.FunctionExpression{
+				Fn:   fn.Func,
+				Args: []expr.Expression{&expr.TypeExpression{Type: typeSpecifier.result.ToString()}},
+			},
+		)
 	}
 
 	results := []*VisitResult{}

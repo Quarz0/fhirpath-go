@@ -59,7 +59,8 @@ invocation                          // Terms that can be used after the function
         ;
 
 function
-        : identifier '(' paramList? ')'
+        : 'ofType(' typeSpecifier ')'
+        | identifier '(' paramList? ')'
         ;
 
 paramList
