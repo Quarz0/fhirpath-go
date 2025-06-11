@@ -7,6 +7,8 @@ import (
 	"github.com/verily-src/fhirpath-go/fhirpath/internal/expr"
 	"github.com/verily-src/fhirpath-go/fhirpath/internal/reflection"
 	"github.com/verily-src/fhirpath-go/fhirpath/system"
+	"github.com/verily-src/fhirpath-go/internal/fhir"
+	"github.com/verily-src/fhirpath-go/internal/protofields"
 )
 
 // Where evaluates the expression args[0] on each input item, collects the items that cause
@@ -60,7 +62,16 @@ func OfType(ctx *expr.Context, input system.Collection, args ...expr.Expression)
 		if err != nil {
 			return nil, err
 		}
-		if typ.Is(typeSpecifier) {
+		if !typ.Is(typeSpecifier) {
+			continue
+		}
+		// attempt to unwrap polymorphic types
+		message, ok := item.(fhir.Base)
+		if !ok {
+			result = append(result, item)
+		} else if oneOf := protofields.UnwrapOneofField(message, "choice"); oneOf != nil {
+			result = append(result, oneOf)
+		} else {
 			result = append(result, item)
 		}
 	}

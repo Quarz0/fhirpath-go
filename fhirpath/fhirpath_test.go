@@ -50,6 +50,9 @@ var patientChu = &ppb.Patient{
 			System: &dtpb.ContactPoint_SystemCode{Value: cpb.ContactPointSystemCode_PHONE},
 		},
 	},
+	Deceased: &ppb.Patient_DeceasedX{
+		Choice: &ppb.Patient_DeceasedX_Boolean{Boolean: &dtpb.Boolean{Value: true}},
+	},
 	Name: []*dtpb.HumanName{
 		{
 			Use: &dtpb.HumanName_UseCode{
@@ -998,6 +1001,12 @@ func TestFunctionInvocation_Evaluates(t *testing.T) {
 			inputPath:       "Patient.name.ofType(FHIR.Element).use.exists()",
 			inputCollection: []fhirpath.Resource{patientChu},
 			wantCollection:  system.Collection{system.Boolean(true)},
+		},
+		{
+			name:            "ofType() with choice element unwraps oneof",
+			inputPath:       "Patient.deceased.ofType(boolean)",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{fhir.Boolean(true)},
 		},
 		{
 			name:            "returns concatenated family name value with join()",
