@@ -47,7 +47,10 @@ type evaluateTestCase struct {
 
 var (
 	patientChu = &ppb.Patient{
-		Id:     fhir.ID("123"),
+		Id: fhir.ID("123"),
+		Text: &dtpb.Narrative{
+			Div: &dtpb.Xhtml{Value: "patient chu record"},
+		},
 		Active: fhir.Boolean(true),
 		Gender: &ppb.Patient_GenderCode{
 			Value: cpb.AdministrativeGenderCode_FEMALE,
@@ -132,6 +135,13 @@ var (
 					},
 					Url:   fhir.URL("http://image"),
 					Title: fhir.String("title"),
+				},
+			},
+		},
+		RelatesTo: []*drpb.DocumentReference_RelatesTo{
+			{
+				Code: &drpb.DocumentReference_RelatesTo_CodeType{
+					Value: cpb.DocumentRelationshipTypeCode_APPENDS,
 				},
 			},
 		},
@@ -454,6 +464,12 @@ func TestEvaluate_PathSelection_ReturnsResult(t *testing.T) {
 			inputPath:       "(Task.input.value as DataRequirement).dateFilter[0].value.end.value",
 			inputCollection: []fhirpath.Resource{task},
 			wantCollection:  system.Collection{system.String(fhirconv.DateTimeToString(end.ToProtoDateTime()))},
+		},
+		{
+			name:            "delimited identifier",
+			inputPath:       "Patient.text.`div`",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{fhir.Xhtml("patient chu record")},
 		},
 	}
 	testEvaluate(t, testCases)
@@ -1069,6 +1085,13 @@ func TestFunctionInvocation_Evaluates(t *testing.T) {
 			wantCollection:  system.Collection{system.Boolean(false), system.Boolean(true)},
 		},
 		{
+			name:            "(legacy) filtering nested fields by field name",
+			inputPath:       "descendants().family",
+			inputCollection: []fhirpath.Resource{patientChu},
+			compileOptions:  []fhirpath.CompileOption{compopts.Permissive()},
+			wantCollection:  system.Collection{patientChu.Name[0].Family, patientChu.Name[1].Family, patientChu.Contact[0].Name.Family},
+		},
+		{
 			name:            "filters child fields with ofType()",
 			inputPath:       "children().ofType(string)",
 			inputCollection: []fhirpath.Resource{patientChu},
@@ -1214,6 +1237,12 @@ func TestTypeExpression_Evaluates(t *testing.T) {
 			inputPath:       "@2000-12-05 as Date",
 			inputCollection: []fhirpath.Resource{},
 			wantCollection:  system.Collection{system.MustParseDate("2000-12-05")},
+		},
+		{
+			name:            "passes through as code",
+			inputPath:       "relatesTo.code as code",
+			inputCollection: []fhirpath.Resource{docRef},
+			wantCollection:  system.Collection{docRef.RelatesTo[0].Code},
 		},
 	}
 
@@ -1424,6 +1453,10 @@ func TestCompile_ReturnsError(t *testing.T) {
 		{
 			name:      "resolving invalid type specifier",
 			inputPath: "1 is System.Patient",
+		},
+		{
+			name:      "reserved keyword not delimited",
+			inputPath: "Patient.text.div",
 		},
 	}
 

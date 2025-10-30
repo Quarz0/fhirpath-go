@@ -17,10 +17,11 @@ import (
 )
 
 var (
-	errNotSupported       = errors.New("expression not currently supported")
-	errTooManyQualifiers  = errors.New("too many type qualifiers")
-	errVisitingChildren   = errors.New("error while visiting child expressions")
-	errUnresolvedFunction = errors.New("function identifier can't be resolved")
+	errNotSupported               = errors.New("expression not currently supported")
+	errTooManyQualifiers          = errors.New("too many type qualifiers")
+	errVisitingChildren           = errors.New("error while visiting child expressions")
+	errUnresolvedFunction         = errors.New("function identifier can't be resolved")
+	errInvalidDelimitedIdentifier = errors.New("invalid delimited identifier")
 )
 
 type FHIRPathVisitor struct {
@@ -421,6 +422,12 @@ func (v *FHIRPathVisitor) VisitExternalConstant(ctx *grammar.ExternalConstantCon
 // root of the expression. If so, it will return a TypeExpression. Otherwise, it returns a FieldExpression.
 func (v *FHIRPathVisitor) VisitMemberInvocation(ctx *grammar.MemberInvocationContext) interface{} {
 	identifier := ctx.GetText()
+	if ctx.Identifier().DELIMITEDIDENTIFIER() != nil {
+		if len(identifier) < 2 || identifier[0] != '`' || identifier[len(identifier)-1] != '`' {
+			return &VisitResult{nil, fmt.Errorf("%w: %s", errInvalidDelimitedIdentifier, identifier)}
+		}
+		identifier = identifier[1 : len(identifier)-1]
+	}
 	var expression expr.Expression
 
 	if resource.IsType(identifier) && !v.visitedRoot {
@@ -480,8 +487,9 @@ func (v *FHIRPathVisitor) VisitFunction(ctx *grammar.FunctionContext) interface{
 
 		return v.transformedVisitResult(
 			&expr.FunctionExpression{
-				Fn:   fn.Func,
-				Args: []expr.Expression{&expr.TypeExpression{Type: typeSpecifier.String()}},
+				Fn:         fn.Func,
+				Args:       []expr.Expression{&expr.TypeExpression{Type: typeSpecifier.String()}},
+				Permissive: v.Permissive,
 			},
 		)
 	}
@@ -500,7 +508,7 @@ func (v *FHIRPathVisitor) VisitFunction(ctx *grammar.FunctionContext) interface{
 	if len(expressions) < fn.MinArity || len(expressions) > fn.MaxArity {
 		return &VisitResult{nil, fmt.Errorf("%w: input arity outside of function arity bounds", impl.ErrWrongArity)}
 	}
-	return v.transformedVisitResult(&expr.FunctionExpression{Fn: fn.Func, Args: expressions})
+	return v.transformedVisitResult(&expr.FunctionExpression{Fn: fn.Func, Args: expressions, Permissive: v.Permissive})
 }
 
 func (v *FHIRPathVisitor) VisitParamList(ctx *grammar.ParamListContext) interface{} {

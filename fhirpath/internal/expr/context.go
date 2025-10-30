@@ -28,6 +28,10 @@ type Context struct {
 	// Resolver is an optional mechanism for resolving FHIR Resources that
 	// is used in the 'resolve()' FHIRPath function.
 	Resolver resolver.Resolver
+
+	// Permissive is a legacy option to allow FHIRpaths with *invalid* fields to be
+	// compiled (to reduce breakages).
+	Permissive bool
 }
 
 // Clone copies this Context object to produce a new instance.
@@ -37,6 +41,7 @@ func (c *Context) Clone() *Context {
 		ExternalConstants: c.ExternalConstants,
 		LastResult:        c.LastResult,
 		Resolver:          c.Resolver,
+		Permissive:        c.Permissive,
 	}
 }
 

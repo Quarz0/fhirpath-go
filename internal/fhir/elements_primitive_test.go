@@ -388,3 +388,13 @@ func TestURIFromUUID(t *testing.T) {
 		})
 	}
 }
+
+func TestXhtml(t *testing.T) {
+	want := "xhtml"
+
+	sut := fhir.Xhtml(want)
+
+	if got := sut.GetValue(); !cmp.Equal(got, want) {
+		t.Errorf("Xhtml: got %v, want %v", got, want)
+	}
+}

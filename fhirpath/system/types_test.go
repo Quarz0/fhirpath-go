@@ -98,6 +98,12 @@ var testCases []testCase = []testCase{
 		shouldCast: true,
 	},
 	{
+		name:       "converts xhtml",
+		input:      fhir.Xhtml("xhtml"),
+		want:       system.String("xhtml"),
+		shouldCast: true,
+	},
+	{
 		name:       "converts integer",
 		input:      fhir.Integer(123),
 		want:       system.Integer(123),

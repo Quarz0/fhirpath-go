@@ -161,6 +161,9 @@ func (e *FieldExpression) Evaluate(ctx *Context, input system.Collection) (syste
 			fieldName = fieldName + "_value"
 			field = reflect.Descriptor().Fields().ByName(protoreflect.Name(fieldName))
 			if field == nil {
+				if e.Permissive {
+					continue
+				}
 				return nil, fmt.Errorf("%w: %s not a field on %T", ErrInvalidField, fieldName, message)
 			}
 		}
@@ -442,8 +445,9 @@ var _ Expression = (*EqualityExpression)(nil)
 // FunctionExpression enables evaluation of Function Invocation expressions.
 // It holds the function and function arguments.
 type FunctionExpression struct {
-	Fn   func(*Context, system.Collection, ...Expression) (system.Collection, error)
-	Args []Expression
+	Fn         func(*Context, system.Collection, ...Expression) (system.Collection, error)
+	Args       []Expression
+	Permissive bool
 }
 
 // Evaluate evaluates the function with respect to its arguments. Returns the result

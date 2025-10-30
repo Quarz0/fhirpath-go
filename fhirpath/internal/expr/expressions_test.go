@@ -211,6 +211,12 @@ func TestFieldExpression_Gets_DesiredField(t *testing.T) {
 			wantCollection: system.Collection{patientBirthDay},
 		},
 		{
+			name:           "(Legacy) input item doesn't have field",
+			fieldExp:       &expr.FieldExpression{FieldName: "given", Permissive: true},
+			input:          system.Collection{patientFirstHumanName, patientContactPoint[0]},
+			wantCollection: system.Collection{patientFirstHumanName.Given[0], patientFirstHumanName.Given[1]},
+		},
+		{
 			name:           "(Legacy) input contains non-resource items",
 			fieldExp:       &expr.FieldExpression{FieldName: "birthDate", Permissive: true},
 			input:          system.Collection{patientMissingName, "hello"},

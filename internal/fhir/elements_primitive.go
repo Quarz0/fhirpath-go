@@ -341,3 +341,12 @@ func UUID(value string) *dtpb.Uuid {
 func RandomUUID() *dtpb.Uuid {
 	return UUID(uuid.NewString())
 }
+
+// Xhtml creates an R4 FHIR XHTML element from a string value.
+//
+// See: https://hl7.org/fhir/R4/narrative.html#xhtml
+func Xhtml(value string) *dtpb.Xhtml {
+	return &dtpb.Xhtml{
+		Value: value,
+	}
+}
