@@ -28,3 +28,17 @@ func ErroringResolver(err error) resolver.Resolver {
 		return nil, err
 	})
 }
+
+// SimpleResolver returns a resolver.Resolver that uses the reference as a key to lookup for the
+// resource in a map.
+func SimpleResolver(resources map[string][]fhirpath.Resource) resolver.Resolver {
+	return resolverFunc(func(input []string) ([]fhir.Resource, error) {
+		var result []fhir.Resource
+		for _, ref := range input {
+			if v, ok := resources[ref]; ok {
+				result = append(result, v...)
+			}
+		}
+		return result, nil
+	})
+}

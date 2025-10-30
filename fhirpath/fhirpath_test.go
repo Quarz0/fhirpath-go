@@ -219,8 +219,9 @@ func testEvaluate(t *testing.T, testCases []evaluateTestCase) {
 
 func TestResolve(t *testing.T) {
 	var patientChuRef = &dtpb.Reference{
-		Type: fhir.URI("Patient"),
-		Id:   fhir.String("123"),
+		Reference: &dtpb.Reference_Uri{
+			Uri: &dtpb.String{Value: "Patient/123"},
+		},
 	}
 
 	var obsWithPatientChuRef = &opb.Observation{
@@ -240,7 +241,7 @@ func TestResolve(t *testing.T) {
 				obsWithPatientChuRef,
 			},
 			evaluateOptions: []fhirpath.EvaluateOption{
-				evalopts.WithResolver(resolvertest.HappyResolver(patientChu))},
+				evalopts.WithResolver(resolvertest.SimpleResolver(map[string][]fhirpath.Resource{"Patient/123": {patientChu}}))},
 			wantCollection: system.Collection{patientChu},
 		},
 		{
@@ -281,7 +282,7 @@ func TestResolve(t *testing.T) {
 				obsWithPatientTsuRef,
 			},
 			evaluateOptions: []fhirpath.EvaluateOption{
-				evalopts.WithResolver(resolvertest.HappyResolver(patientChu)),
+				evalopts.WithResolver(resolvertest.SimpleResolver(map[string][]fhirpath.Resource{"Patient/123": {patientChu}})),
 			},
 			wantCollection: system.Collection{patientChu},
 		},
