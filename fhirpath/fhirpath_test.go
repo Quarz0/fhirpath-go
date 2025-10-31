@@ -1069,6 +1069,12 @@ func TestFunctionInvocation_Evaluates(t *testing.T) {
 			wantCollection:  system.Collection{system.Boolean(false), system.Boolean(true)},
 		},
 		{
+			name:            "returns last item repeatedly",
+			inputPath:       "repeat(children().last())",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{patientChu.Contact[0], patientChu.Contact[0].Name, patientChu.Contact[0].Name.Given[0]},
+		},
+		{
 			name:            "filters child fields with ofType()",
 			inputPath:       "children().ofType(string)",
 			inputCollection: []fhirpath.Resource{patientChu},
