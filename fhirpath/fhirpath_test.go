@@ -1140,6 +1140,48 @@ func TestFunctionInvocation_Evaluates(t *testing.T) {
 				fhir.String("Chu"),
 			},
 		},
+		{
+			name:            "hasValue() returns true",
+			inputPath:       "deceased.hasValue() and name[0].family.hasValue()",
+			inputCollection: []fhirpath.Resource{patientVoldemort},
+			wantCollection:  system.Collection{system.Boolean(true)},
+		},
+		{
+			name:            "passes through as function",
+			inputPath:       "Patient.as(Patient)",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{patientChu},
+		},
+		{
+			name:            "passes through as function for subtype relationship - fhirpath.resource",
+			inputPath:       "Patient.name.use[0].as(FHIR.Element)",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{patientChu.Name[0].Use},
+		},
+		{
+			name:            "passes through as function for subtype relationship - fhir.resource",
+			inputPath:       "Patient.name.use[0].as(FHIR.Element)",
+			inputCollection: []fhir.Resource{patientChu},
+			wantCollection:  system.Collection{patientChu.Name[0].Use},
+		},
+		{
+			name:            "returns empty if as function is not correct type",
+			inputPath:       "Patient.name.family[0].as(HumanName)",
+			inputCollection: []fhirpath.Resource{patientChu},
+			wantCollection:  system.Collection{},
+		},
+		{
+			name:            "unwraps polymorphic type with as function",
+			inputPath:       "Patient.deceased.as(boolean)",
+			inputCollection: []fhirpath.Resource{patientVoldemort},
+			wantCollection:  system.Collection{fhir.Boolean(true)},
+		},
+		{
+			name:            "passes through system type with as function",
+			inputPath:       "@2000-12-05.as(Date)",
+			inputCollection: []fhirpath.Resource{},
+			wantCollection:  system.Collection{system.MustParseDate("2000-12-05")},
+		},
 	}
 
 	testEvaluate(t, testCases)
